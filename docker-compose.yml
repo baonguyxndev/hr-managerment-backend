@@ -1,0 +1,15 @@
+services:
+  mongodb:
+    image: mongo:5.0.15
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: baonguyxndev
+      MONGO_INITDB_ROOT_PASSWORD: hrm@123
+    ports:
+      - 27018:27017
+    volumes:
+      - mongodb_data_container:/data/db
+
+volumes:
+  mongodb_data_container:
+
+    # docker compose -p db-hr-managerment up -d
