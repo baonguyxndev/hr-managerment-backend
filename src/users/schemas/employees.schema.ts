@@ -26,7 +26,7 @@ export class Employee {
     @Prop()
     image: string;
 
-    @Prop({ default: 'EmployeeS' })
+    @Prop({ default: 'Employee' })
     role: string;
 
     @Prop({ default: 'LOCAL' })
