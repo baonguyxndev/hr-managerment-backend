@@ -9,5 +9,6 @@ import { Employee, EmployeeSchema } from './schemas/employees.schema';
   imports: [MongooseModule.forFeature([{ name: Employee.name, schema: EmployeeSchema }])],
   controllers: [EmployeesController],
   providers: [EmployeesService],
+  exports: [EmployeesService]
 })
 export class EmployeesModule { }

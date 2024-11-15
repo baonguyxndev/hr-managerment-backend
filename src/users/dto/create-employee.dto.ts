@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsOptional } from "class-validator";
+import { IsEmail, IsNotEmpty, IsOptional, IsPhoneNumber } from "class-validator";
 
 export class CreateEmployeeDto {
 
@@ -11,4 +11,13 @@ export class CreateEmployeeDto {
 
     @IsOptional()
     name: string;
+
+    @IsOptional()
+    phone: string;
+
+    @IsOptional()
+    address: string;
+
+    @IsOptional()
+    image: string;
 }
