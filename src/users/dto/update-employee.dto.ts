@@ -1,4 +1,21 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateEmployeeDto } from './create-employee.dto';
+import { IsMongoId, IsNotEmpty, IsOptional } from "class-validator";
 
-export class UpdateEmployeeDto extends PartialType(CreateEmployeeDto) { }
+
+export class UpdateEmployeeDto {
+
+    @IsMongoId({ message: "_id không hợp lệ" })
+    @IsNotEmpty({ message: "_id không được để trống" })
+    _id: string;
+
+    @IsOptional()
+    name: string;
+
+    @IsOptional()
+    phone: string;
+
+    @IsOptional()
+    address: string;
+
+    @IsOptional()
+    image: string;
+}

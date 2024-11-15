@@ -3,7 +3,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { Employee } from './schemas/employees.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import aqp from 'api-query-params';
 
@@ -68,11 +68,22 @@ export class EmployeesService {
     return `This action returns a #${id} Employee`;
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return `This action updates a #${id} Employee`;
+  async findByEmail(email: string) {
+    return await this.employeesModule.findOne({ email })
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} Employee`;
+  async update(updateEmployeeDto: UpdateEmployeeDto) {
+    return await this.employeesModule.updateOne(
+      { _id: updateEmployeeDto._id }, { ...updateEmployeeDto })
+  }
+
+  remove(_id: string) {
+    //check id
+    if (mongoose.isValidObjectId(_id)) {
+      //delete
+      return this.employeesModule.deleteOne({ _id })
+    } else {
+      throw new BadRequestException("Id không đúng định dạng mongodb")
+    }
   }
 }

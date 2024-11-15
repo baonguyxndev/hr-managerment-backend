@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EmployeesModule } from './users/employees.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { EmployeesModule } from './users/employees.module';
         uri: configServer.get<string>('MONGODB_URI'),
       }),
       inject: [ConfigService]
-    })
+    }),
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
