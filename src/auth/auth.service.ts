@@ -1,24 +1,34 @@
-
 import { comparePasswordHelper } from '@/helpers/util';
-import { EmployeesService } from '@/users/employees.service';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { CreateAuthDto } from './dto/create-auth.dto';
+import { UsersService } from '@/users/service/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private employeeService: EmployeesService,
+    private userService: UsersService,
     private jwtService: JwtService,
   ) { }
 
-  async login(email: string, password: string): Promise<any> {
-    const employee = await this.employeeService.findByEmail(email);
-    const isValidPassword = comparePasswordHelper(password, employee.password);
-    if (!isValidPassword)
-      throw new UnauthorizedException("Email/Password không hợp lệ");
-    const payload = { sub: employee._id, email: employee.email };
+
+  async validateUser(email: string, password: string): Promise<any> {
+    const user = await this.userService.findByEmail(email);
+    const isValidPassword = await comparePasswordHelper(password, user.password);
+    if (!user || !isValidPassword)
+      return null;
+    return user;
+  }
+
+  async login(user: any) {
+    const payload = { email: user.email, sub: user._id };
+    console.log('Payload for JWT:', payload); // Log để kiểm tra payload
     return {
-      accessToken: await this.jwtService.signAsync(payload)
+      access_token: this.jwtService.sign(payload),
     }
+  }
+
+  handleRegister = async (registerDto: CreateAuthDto) => {
+    return await this.userService.handleRegister(registerDto)
   }
 }
