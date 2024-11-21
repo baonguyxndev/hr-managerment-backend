@@ -12,9 +12,6 @@ export class Employee {
     email: string;
 
     @Prop()
-    EmployeeName: string;
-
-    @Prop()
     password: string;
 
     @Prop()
@@ -26,7 +23,7 @@ export class Employee {
     @Prop()
     image: string;
 
-    @Prop({ default: 'Employee' })
+    @Prop({ default: 'NONE' })
     role: string;
 
     @Prop({ default: 'LOCAL' })

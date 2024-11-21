@@ -22,15 +22,6 @@ export class EmployeesController {
     return this.employeesService.findAll(query, +current, +pageSize);
   }
 
-  async findByEmail(email: string) {
-    return await this.EmployeesModule.findOne({ email })
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.employeesService.findOne(+id);
-  }
-
   @Patch()
   update(@Body() updateEmployeeDto: UpdateEmployeeDto) {
     return this.employeesService.update(updateEmployeeDto);

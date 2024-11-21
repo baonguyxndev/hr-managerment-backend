@@ -19,7 +19,7 @@ export class EmployeesService {
   }
 
   async create(createEmployeeDto: CreateEmployeeDto) {
-    const { name, email, password } = createEmployeeDto;
+    const { name, email, password, phone, address, image } = createEmployeeDto;
 
     //kiểm tra email có tồn tại hay kh
     const isExist = await this.isEmailExist(email)
@@ -30,7 +30,7 @@ export class EmployeesService {
     //hash password
     const hashPassword = await hashPasswordHelper(password)
     const employee = await this.employeesModule.create({
-      name, email, password: hashPassword
+      name, email, password: hashPassword, phone, address, image
     })
     return {
       _id: employee._id
@@ -62,10 +62,6 @@ export class EmployeesService {
       .sort(sort as any);
 
     return { results, totalPages };
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} Employee`;
   }
 
   async findByEmail(email: string) {
