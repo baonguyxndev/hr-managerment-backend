@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { JwtAuthGuard } from './middleware/passport/jwt-auth.guard';
 import { UsersModule } from './users/module/users.module';
+import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter';
 import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
@@ -38,13 +39,13 @@ import { MailerModule } from '@nestjs-modules/mailer';
           from: '"Giáo Xứ Tân Trang" <no-reply@giaoxutantrang@gmail.com>',
         },
         // preview: true,
-        // template: {
-        //   dir: process.cwd() + '/src/mail/templates/',
-        //   adapter: new HandlebarsAdapter(),
-        //   options: {
-        //     strict: true,
-        //   },
-        // },
+        template: {
+          dir: process.cwd() + '/src/mail/templates/',
+          adapter: new HandlebarsAdapter(),
+          options: {
+            strict: true,
+          },
+        },
       }),
       inject: [ConfigService],
     }),
